@@ -23,13 +23,51 @@ Common DBMS include:
 
 In this series we are of course going to focus on [MySQL](https://www.mysql.com/)
 
-Follow the instructions to install MySQL. 
+Follow the instructions in the previous link to install MySQL. 
 
 Once installed, you can create a database with:
 
 ```MySQL
 create database myDB;
 ```
+Hit the lightning button to execute.
 
-Hit the lightning button to execute
+To use that database, either right click "Set as Default Schema" and select or use the following command:
 
+```MySQL
+use myDB;
+```
+
+To drop a database:
+```MySQL
+drop database myDB;
+```
+
+To set a database to read only:
+```MySQL
+alter datbase myDB read only = 1;
+```
+To change it out of read only:
+```MySQL
+alter datbase myDB read only = 0;
+```
+
+To create a table:
+```MySQL
+create table employees(
+  employee_id INT,
+  first_name VARCHAR(insert number of characters),
+  last_name VARCHAR(50),
+  hourly_pay DECIAML(5, 2),
+  fire_date,
+);
+```
+
+If you need to select a table:
+```MySQL
+select * from eployees;
+```
+To rename a table:
+```MySQL
+rename table employees to workers;
+```
