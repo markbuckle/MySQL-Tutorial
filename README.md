@@ -148,7 +148,21 @@ To add in the current data / time:
 insert into employees
 values(current_date(), current_time(), NOW());
 ```
+To make a column with a required value, simply add "not null". For example:
+```MySQL
+create table products(
+  product_id INT,
+  product_name varchar(25),
+  price decimal (4, 2) **not null**
+);
+```
+To add it to a full table that already exists:
+```MySQL
+alter table products
+modify price decimal(4, 2) not null;
+```
 
+Checkpoint 50:04
 
 
 
