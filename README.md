@@ -216,7 +216,32 @@ And it will continue to auto-increment when you add in new values:
 insert into transcations (amount)
 values(4.99);
 ```
+A foreign is is a primary key from one table that is being used in another table. 
 
+To create a foreign key, use this as an example:
+```MySQL
+create table transactions(
+  transaction_id int primary key auto_increment,
+  amount decimal(5, 2)
+  customer_id int,
+  foregin key(customer_id) references customers(customer_id),
+);
+```
+
+Before attempted to delete a foreign key, make sure to:
+```MySQL
+set foreign_key_checks = 0;
+```
+
+When a foreign key is deleted, replace foreign key with null
+```MySQL
+on delete set null
+```
+When a foreign key is deleted, delete entire row
+Or: 
+```MySQL
+on delete cascade
+```
 
 
 
