@@ -231,18 +231,38 @@ create table transactions(
 Before attempted to delete a foreign key, make sure to:
 ```MySQL
 set foreign_key_checks = 0;
+
+delete from customers
+where customer_id = 4;
 ```
 
-When a foreign key is deleted, replace foreign key with null
+Once a a foreign key is deleted, we need to delete it from our current table (i.e. transacitons), you'll need to recreate the table like this:
+```MySQL
+create table transactions(
+  transaction_id int primary key auto_increment,
+  amount decimal(5, 2)
+  customer_id int,
+  foregin key(customer_id) references customers(customer_id),
+  on delete set null
+);
+```
+There's two differen't ways to delete a foreign key (aka on delete):
+1) replace foreign key with null
 ```MySQL
 on delete set null
 ```
-When a foreign key is deleted, delete entire row
+2) delete entire row
 Or: 
 ```MySQL
 on delete cascade
 ```
-
+Another way to do this might look like:
+```MySQL
+alter table transactions
+add constraint fk_transactions_id
+foreign key(customer_id) references customers(customer_id)
+on delete cascade;
+```
 
 
 
