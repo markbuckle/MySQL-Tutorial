@@ -143,11 +143,12 @@ To undo / rollback to the last step:
 ```MySQL
 rollback;
 ```
-To add in the current data / time:
+To add in new values:
 ```MySQL
 insert into employees
 values(current_date(), current_time(), NOW());
 ```
+
 To make a column with a required value, simply add "not null". For example:
 ```MySQL
 create table products(
@@ -162,8 +163,59 @@ alter table products
 modify price decimal(4, 2) not null;
 ```
 
-Checkpoint 50:04
+How to check a table/values against a limit:
+```MySQL
+alter table employees
+add constraint chk_hourly_pay check (hourly_pay >= 10.00);
+```
 
+To drop a check:
+```MySQL
+alter table employees
+drop check chk_hourly_pay;
+```
+
+To add a default value to a column:
+```MySQL
+create table products
+  product_id int,
+  product_name varchar(25),
+  price decimal (4, 2) default 0
+);
+```
+Or:
+```MySQL
+alter table products
+alter price set default 0;
+```
+
+Primary Keys are unique identifiers. 
+
+To set a primary key to a new table:
+```MySQL
+create table transactions(
+  transaction_id int primary key,
+  amount decimal(5, 2)
+);
+```
+To add a primary key to an existing table:
+```MySQL
+alter table transactions
+add constraint
+primary key(transaction_id);
+```
+To add auto-increment, you can only do it to a primary key:
+```MySQL
+create table transactions(
+  transaction_id int primary key auto_increment,
+  amount decimal(5, 2)
+);
+```
+And it will continue to auto-increment when you add in new values:
+```MySQL
+insert into transcations (amount)
+values(4.99);
+```
 
 
 
