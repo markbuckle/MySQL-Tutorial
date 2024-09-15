@@ -308,4 +308,84 @@ update employees
 set hourly_pay = hourly_pay + 1;
 ```
 
+Trigger example #2
+Step 1:
+```MySQL
+create trigger before_hourly_pay_insert
+before insert on employees
+for each row
+set new.salary = (new.hourly_pay * 2080);
+```
+Step 2:
+```MySQL
+insert into employees
+values(6, "Sheldon","Plankton", 10, NULL, "janitor", "2023-01-07", 5);. 
+```
 
+Trigger example #3:
+Step 1:
+```MySQL
+create table expenses(
+  expense_id int primary key,
+  expense_name varchar(50),
+expense_total decimal(10, 2)
+);
+```
+Step 2:
+```MySQL
+insert into expenses
+values  (1, "salaries", 0),
+        (2, "supplies", 0),
+        (3, "taxes", 0);
+```
+Step 3:
+```MySQL
+update expenses
+set expense_total = (select sum(salary) from employees)
+where expense_name = "salaries";
+```
+Step 4:
+```MySQL
+create trigger after_salary_delete
+after delete on employees
+for each row
+update expenses
+set expense_total = expense_total - old.salary
+where expense_name = "salaries";
+```
+Step 5:
+```MySQL
+delete from employees
+where employee_id = 6;
+```
+Step 6:
+```MySQL
+create trigger after_salary_insert
+after insert on employees
+for each row
+update expenses
+set expense_total = expense_total + new.salary
+where expense_name = "salaries";
+```
+Step 7:
+```MySQL
+insert into employees
+values(6, "Sheldon", "Plankton", 10, NULL, "janitor", "2023-01-07", 5);
+```
+
+Example trigger #4:
+Step 1:
+```MySQL
+create trigger after_salary_update
+after update on employees
+for each row
+update expenses
+set expense_total = expense_total + (new.salary - old.salary)
+where expense_name = "salaries";
+```
+Step 2:
+```MySQL
+update employees
+set hourly_pay = 100
+where employee_id = 1;
+```
