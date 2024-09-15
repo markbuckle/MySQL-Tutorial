@@ -264,5 +264,48 @@ foreign key(customer_id) references customers(customer_id)
 on delete cascade;
 ```
 
+A stored procedure is prepared/verbose SQL code that you can save / bootstrap.
+
+To turn code into a stored procedure:
+```MySQL
+delimiter $$
+create procedure function_name()
+begin
+  <enter verbose code here>;
+end $$
+delimiter ;
+```
+To invoke the stored procedure. You can also pass data into the function parenthesis if you want to invoke a particular id within the function.
+```MySQL
+call function_name(1);
+```
+A trigger is when an event happens, do something. Ex. (insert, update or delete). It can check data, handle errors or audit tables.
+Example:
+Step 1:
+```MySQL
+alter table employees
+add column salary decimal(10, 2) after hourly_pay;
+```
+Step 2:
+```MySQL
+update employees
+set salary = hourly_pay * 2,080 (work hours in a typical year)
+```
+Step 3 (create the trigger):
+```MySQL
+create trigger before_hourly_pay_update
+before update on employees
+for each row
+set NEW.salary = (NEW.hourly_pay * 2080);
+```
+Step 4:
+```MySQL
+show triggers;
+```
+Step 5 (update your trigger):
+```MySQL
+update employees
+set hourly_pay = hourly_pay + 1;
+```
 
 
